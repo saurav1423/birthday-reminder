@@ -7,9 +7,9 @@ import {
 	useHistory,
 } from 'react-router-dom';
 
-import Signin from '../src/components/Signin';
-import Signup from '../src/components/Signup';
-import Birthday from '../src/components/Birthday';
+import Signin from './components/Signin';
+import Signup from './components/Signup';
+import Birthday from './components/Birthday';
 
 const Routing = () => {
 	const history = useHistory();

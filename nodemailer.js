@@ -1,38 +1,60 @@
-const nodemailer = require('nodemailer');
-const sendgridTransport = require('nodemailer-sendgrid-transport');
+// const nodemailer = require('nodemailer');
+// const sendgridTransport = require('nodemailer-sendgrid-transport');
+const sgMail = require('@sendgrid/mail');
 const cron = require('node-cron');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const { SENDGRID_API } = require('./config/keys');
 
-cron.schedule('00 22 * * *', () => {
+cron.schedule('17 22 * * *', () => {
+	sgMail.setApiKey(SENDGRID_API);
 	function sedEmail(toEmail, userName, bdayData) {
-		const transporter = nodemailer.createTransport(
-			sendgridTransport({
-				auth: {
-					api_key: SENDGRID_API,
-				},
-			})
-		);
+		//    const transporter = nodemailer.createTransport(
+		// 		sendgridTransport({
+		// 			auth: {
+		// 				api_key: SENDGRID_API,
+		// 			},
+		// 		})
+		// 	);
 
 		if (bdayData.length == 0) {
 			return;
 		}
 		bdayData.map((bday) => {
-			var mailOptions = {
+			// var mailOptions = {
+			// 	from: 'birthdayreminderofficial@gmail.com',
+			// 	to: toEmail,
+			// 	replyTo: 'birthdayreminderofficial@gmail.com',
+			// 	subject: 'Your friend have birthday tommorow!',
+			// 	text: `Hey dear ${userName}, Your Friend ${bday.fname} have brithday tommorow! `,
+			// };
+			// transporter.sendMail(mailOptions, function (err, info) {
+			// 	if (err) {
+			// 		console.log(err);
+			// 	} else {
+			// 		console.log('Email sent: ' + info.response);
+			// 	}
+			// });
+
+			const msg = {
 				from: 'birthdayreminderofficial@gmail.com',
 				to: toEmail,
 				replyTo: 'birthdayreminderofficial@gmail.com',
 				subject: 'Your friend have birthday tommorow!',
 				text: `Hey dear ${userName}, Your Friend ${bday.fname} have brithday tommorow! `,
 			};
-			transporter.sendMail(mailOptions, function (err, info) {
-				if (err) {
-					console.log(err);
-				} else {
-					console.log('Email sent: ' + info.response);
+			sgMail.send(msg).then(
+				() => {
+					console.log('email sent');
+				},
+				(error) => {
+					console.error(error);
+
+					if (error.response) {
+						console.error(error.response.body);
+					}
 				}
-			});
+			);
 		});
 	}
 	User.find({}, function (err, allUsers) {

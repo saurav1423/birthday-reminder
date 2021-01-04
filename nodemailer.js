@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const { SENDGRID_API } = require('./config/keys');
 
-sgMail.setApiKey(SENDGRID_API);
 function sedEmail(toEmail, userName, bdayData) {
+	sgMail.setApiKey(SENDGRID_API);
 	if (bdayData.length == 0) {
 		return;
 	}

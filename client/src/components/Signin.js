@@ -24,6 +24,10 @@ const Signin = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
+		axios.get('/sendmail').then((response) => {
+			console.log(response);
+		});
+
 		axios
 			.post('/signin', {
 				email,

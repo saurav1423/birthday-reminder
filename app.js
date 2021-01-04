@@ -17,11 +17,11 @@ mongoose.connection.on('error', (err) => {
 });
 
 require('./models/user');
-require('./nodemailer');
 
 app.use(express.json());
 app.use(require('./routes/auth'));
 app.use(require('./routes/user'));
+app.use(require('./nodemailer'));
 
 if (process.env.NODE_ENV == 'production') {
 	app.use(express.static('client/build'));

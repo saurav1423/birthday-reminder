@@ -1,28 +1,31 @@
 const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
 const cron = require('node-cron');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
-cron.schedule('10 20 * * *', () => {
-	var smtpTransport = nodemailer.createTransport({
-		service: 'Gmail',
-		auth: {
-			user: 'birthdayreminderofficial@gmail.com',
-			pass: 'Privacy#12',
-		},
-	});
+cron.schedule('06 21 * * *', () => {
 	function sedEmail(toEmail, userName, bdayData) {
+		const transporter = nodemailer.createTransport(
+			sendgridTransport({
+				auth: {
+					api_key:
+						'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',
+				},
+			})
+		);
+
 		if (bdayData.length == 0) {
 			return;
 		}
 		bdayData.map((bday) => {
 			var mailOptions = {
 				to: toEmail,
-				from: 'email@email.com',
+				from: 'birthdayreminderofficial@gmail.com',
 				subject: 'Your friend have birthday tommorow!',
 				text: `Hey dear ${userName}, Your Friend ${bday.fname} have brithday tommorow! `,
 			};
-			smtpTransport.sendMail(mailOptions, function (err, info) {
+			transporter.sendMail(mailOptions, function (err, info) {
 				if (err) {
 					console.log(err);
 				} else {
@@ -71,3 +74,4 @@ cron.schedule('10 20 * * *', () => {
 });
 
 //'30 23 * * *'
+//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

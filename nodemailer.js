@@ -17,7 +17,9 @@ function sedEmail(toEmail, userName, bdayData) {
 			text: `Hey dear ${userName}, Your Friend ${bday.fname} have brithday tommorow! `,
 		};
 		sgMail.send(msg).then(
-			() => {},
+			() => {
+				console.log('success');
+			},
 			(error) => {
 				console.error(error);
 
@@ -54,8 +56,6 @@ User.find({}, function (err, allUsers) {
 				todayBirthday.push(friend);
 			}
 		});
-
-		console.log(todayBirthday);
 
 		sedEmail(allUsers[i].email, allUsers[i].name, todayBirthday);
 	}

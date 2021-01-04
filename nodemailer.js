@@ -3,14 +3,14 @@ const sendgridTransport = require('nodemailer-sendgrid-transport');
 const cron = require('node-cron');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const { SENDGRID_API } = require('./config/keys');
 
-cron.schedule('06 21 * * *', () => {
+cron.schedule('45 21 * * *', () => {
 	function sedEmail(toEmail, userName, bdayData) {
 		const transporter = nodemailer.createTransport(
 			sendgridTransport({
 				auth: {
-					api_key:
-						'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',
+					api_key: SENDGRID_API,
 				},
 			})
 		);
@@ -20,8 +20,9 @@ cron.schedule('06 21 * * *', () => {
 		}
 		bdayData.map((bday) => {
 			var mailOptions = {
-				to: toEmail,
 				from: 'birthdayreminderofficial@gmail.com',
+				to: toEmail,
+				replyTo: 'birthdayreminderofficial@gmail.com',
 				subject: 'Your friend have birthday tommorow!',
 				text: `Hey dear ${userName}, Your Friend ${bday.fname} have brithday tommorow! `,
 			};

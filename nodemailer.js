@@ -3,7 +3,7 @@ const cron = require('node-cron');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
-cron.schedule('53 19 * * *', () => {
+cron.schedule('10 20 * * *', () => {
 	var smtpTransport = nodemailer.createTransport({
 		service: 'Gmail',
 		auth: {

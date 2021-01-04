@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const { SENDGRID_API } = require('./config/keys');
 
-cron.schedule('21 22 * * *', () => {
+cron.schedule('00 23 * * *', () => {
 	sgMail.setApiKey(SENDGRID_API);
 	function sedEmail(toEmail, userName, bdayData) {
 		//    const transporter = nodemailer.createTransport(

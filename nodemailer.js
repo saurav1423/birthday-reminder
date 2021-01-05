@@ -13,8 +13,8 @@ function sedEmail(toEmail, userName, bdayData) {
 			from: 'birthdayreminderofficial@gmail.com',
 			to: toEmail,
 			replyTo: 'birthdayreminderofficial@gmail.com',
-			subject: 'Your friend have birthday today!',
-			text: `Hey dear ${userName}, Your Friend ${bday.fname} have brithday today! `,
+			subject: 'Your friend have birthday tomorrow!',
+			text: `Hey dear ${userName}, Your Friend ${bday.fname} have brithday tomorrow! `,
 		};
 		sgMail.send(msg).then(
 			() => {
